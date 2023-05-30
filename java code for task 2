@@ -1,0 +1,146 @@
+import java.util.Scanner;
+
+public class atm {
+    public static void main(String[] args) {
+        Scanner first = new Scanner(System.in);
+        System.out.println("\n1.Register \n2.Exit");
+        System.out.println(" Enter your choice ... ");
+        int choice = first.nextInt();
+        Operationss O = new Operationss();
+        if (choice == 1) {
+            O.register();
+            while (true) {
+                System.out.println("-----------Welcome to ATM-------------");
+                System.out.println("Select the Options");
+                System.out.println("1. Deposit \n2. Withdraw \n3. Balance \n4. Transfer \n5. Transaction History \n6. Exit");
+                System.out.println("Enter your choice: ");
+                Scanner abc = new Scanner(System.in);
+                int input = abc.nextInt();
+                switch (input) {
+                    case 1:
+                        O.Deposit();
+                        break;
+                    case 2:
+                        O.withdraw();
+                        break;
+                    case 3:
+                        O.balance();
+                        break;
+                    case 4:
+                        O.transfer();
+                        break;
+                    case 5:
+                        O.transaction_history();
+                        break;
+                    case 6:
+                        O.Exit();
+                        break;
+                }
+            }
+        }else {
+            System.exit(0);
+        }
+    }
+}
+
+
+
+
+
+    class Operationss {
+            String name;
+            String userid;
+            int accNo;
+            int pin;
+            float balance = 0;
+            int transaction = 0;
+            String trans_h = " ";
+        //take input for login fun
+        Scanner sc = new Scanner(System.in);
+
+        //Register function
+        public void register() {
+            System.out.println("Enter Your Name: ");
+            this.name = sc.nextLine();
+            System.out.println("Enter your userid");
+            this.userid = sc.nextLine();
+            System.out.println("Account No: ");
+            this.accNo = sc.nextInt();
+            System.out.println("Enter Your PIN: ");
+            this.pin = sc.nextInt();
+            System.out.println("You Registered Successfully...");
+        }
+
+
+
+
+        //Deposit Function
+        public void Deposit(){
+            Scanner a = new Scanner(System.in);
+            System.out.println("Enter the amount: ");
+            float amount = a.nextFloat();
+            balance += amount;
+            transaction++;
+            System.out.println("Rs."+amount+" Successfully Deposited");
+            String str = "Rs." +amount + " deposited\n";
+            trans_h = trans_h.concat(str);
+        }
+
+        //Withdraw Function
+        public void withdraw(){
+            Scanner b = new Scanner(System.in);
+            System.out.println("Enter amount to be withdraw: ");
+            float amount = b.nextFloat();
+            if (balance >= amount){
+                balance -= amount;
+                transaction++;
+                System.out.println("Rs."+ amount+ " Successfully Withdrawn");
+                String str = "Rs."+ amount + " withdraw";
+                trans_h = trans_h.concat(str);
+            } else {
+                System.out.println("Insufficient balance");
+            }
+        }
+
+        //Balance Function
+        public void balance(){
+            System.out.println("Balacne is: "+ balance);
+        }
+
+        //Transaction History
+        public void transaction_history(){
+            if (transaction == 0){
+                System.out.println("No Transactions");
+            }
+            else {
+                System.out.println(trans_h);
+            }
+        }
+
+        //Transfer
+        public void transfer(){
+            Scanner c = new Scanner(System.in);
+            System.out.println("Enter recipient name: ");
+            String name = c.nextLine();
+            System.out.println("Enter account number: ");
+            int no = c.nextInt();
+            System.out.println("Enter amount to be transferred: ");
+            int amount = c.nextInt();
+            //check balance
+            if(balance >= amount){
+                balance -= amount;
+                transaction++;
+                System.out.println("Rs."+amount+ " Successfully Transferred");
+                String str = "Rs." + amount + " transferred";
+                trans_h = trans_h.concat(str);
+            } else {
+                System.out.println("Insufficient balance");
+            }
+        }
+
+        //Exit function
+        public void Exit(){
+
+            System.exit(0);
+        }
+    }
